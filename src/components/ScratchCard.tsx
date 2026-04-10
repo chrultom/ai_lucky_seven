@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row } from '../types/game';
 import { useI18n } from '../context/i18n';
 import { ScratchSlot } from './ScratchSlot';
@@ -12,25 +12,16 @@ interface ScratchCardProps {
 
 export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isRevealed, onClaimPrize }) => {
   const { t } = useI18n();
-  const [revealedCount, setRevealedCount] = useState(0);
-  const totalSlots = rows.length;
 
   const handleSlotReveal = (rowIndex: number) => {
     onClaimPrize(rowIndex);
-    setRevealedCount(prev => {
-      const next = prev + 1;
-      if (next === totalSlots && !isRevealed) {
-        onReveal();
-      }
-      return next;
-    });
   };
 
   useEffect(() => {
-    if (isRevealed) {
-      setRevealedCount(totalSlots);
+    if (!isRevealed && rows.length > 0 && rows.every(row => row.isRevealed)) {
+      onReveal();
     }
-  }, [isRevealed, totalSlots]);
+  }, [rows, isRevealed, onReveal]);
 
   return (
     <div className="relative w-full max-w-sm mx-auto bg-slate-50 rounded-xl shadow-2xl overflow-hidden border-[6px] border-yellow-500 select-none flex flex-col p-3">
@@ -40,7 +31,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
         <h2 className="text-3xl font-black text-red-600 tracking-widest uppercase drop-shadow-sm">
           LUCKY 7
         </h2>
-        <div className="w-3/4 h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mt-1"></div>
+        <div className="w-3/4 h-1 bg-linear-to-r from-transparent via-yellow-400 to-transparent mt-1"></div>
       </div>
 
       {/* Rows Container */}
