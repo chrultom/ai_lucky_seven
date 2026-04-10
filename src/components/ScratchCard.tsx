@@ -61,14 +61,14 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
                 <ScratchSlot
                   className="w-full h-12 rounded-md border-2 border-white shadow-sm flex items-center justify-center overflow-hidden"
                   content={
-                    <div className={`w-full h-full flex items-center justify-around px-4 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40' : 'opacity-100'}`}>
-                      <div className="flex flex-col items-center">
+                    <div className={`w-full h-full flex items-center justify-between px-6 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40' : 'opacity-100'}`}>
+                      <div className="flex flex-col items-start w-1/3">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Number</span>
                         <span className={`text-xl font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
                           {row.leftNumber}
                         </span>
                       </div>
-                      <div className="flex flex-col items-center">
+                      <div className="flex flex-col items-end w-1/3 text-right">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Prize</span>
                         <span className={`text-base font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
                           {row.prize} {t.currency}

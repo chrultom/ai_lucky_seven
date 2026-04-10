@@ -19,21 +19,23 @@ function App() {
     return () => clearTimeout(timer);
   }, [gameState.balance]);
 
+  const revealedWinnings = gameState.rows.reduce((sum, row) => {
+    return (row.isRevealed && row.leftNumber === 7 && row.isPaid) ? sum + row.prize : sum;
+  }, 0);
+
   useEffect(() => {
-    if (gameState.cardRevealed) {
-      if (gameState.totalWonOnCard > 0) {
-        setShowWinMessage(true);
-        if (gameState.totalWonOnCard >= 100) {
-          triggerConfetti();
-        }
-        // Hide message after a few seconds
-        const timer = setTimeout(() => {
-          setShowWinMessage(false);
-        }, 4000);
-        return () => clearTimeout(timer);
+    if (revealedWinnings > 0) {
+      setShowWinMessage(true);
+      if (revealedWinnings >= 100) {
+        triggerConfetti();
       }
+      // Hide message after a few seconds
+      const timer = setTimeout(() => {
+        setShowWinMessage(false);
+      }, 4000);
+      return () => clearTimeout(timer);
     }
-  }, [gameState.cardRevealed, gameState.totalWonOnCard]);
+  }, [revealedWinnings]);
 
   const triggerConfetti = () => {
     const duration = 3000;
@@ -118,7 +120,10 @@ function App() {
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
-                onClick={generateCard}
+                onClick={() => {
+                  setShowWinMessage(false);
+                  generateCard();
+                }}
                 disabled={gameState.balance < gameState.cardCost}
                 className={clsx(
                   "group relative px-8 py-4 rounded-2xl font-black text-xl tracking-wide uppercase transition-all duration-300 flex items-center gap-3 overflow-hidden",
@@ -158,7 +163,7 @@ function App() {
           <div className="h-16 flex items-center justify-center">
             {showWinMessage && (
               <div className="animate-bounce bg-green-500 text-white px-8 py-3 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(34,197,94,0.5)] border-4 border-green-400 flex items-center gap-2">
-                🎉 {t.win} +{gameState.totalWonOnCard} {t.currency} 🎉
+                🎉 {t.win} +{revealedWinnings} {t.currency} 🎉
               </div>
             )}
             {gameState.cardRevealed && gameState.totalWonOnCard === 0 && !showWinMessage && (
