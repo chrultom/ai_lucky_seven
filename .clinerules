@@ -1,0 +1,15 @@
+# Project: Lucky 7 Scratch Card
+# Stack: Vite, React, TypeScript, Tailwind CSS, Lucide-React
+
+# Logic Constraints:
+- Card Cost: 2 PLN. Starting Balance: 10 PLN.
+- Winning Condition: Left column number equals 7.
+- Prize Probabilities: 
+  2: 45%, 5: 25%, 10: 15%, 20: 10%, 100: 4%, 1000: 0.9%, 77777: 0.1%.
+- Canvas: Use HTML5 Canvas for scratching. Reveal threshold: 60%.
+
+# Code Quality:
+- All comments in English.
+- Use TypeScript interfaces for State and Prize types.
+- Ensure the app is responsive and mobile-friendly.
+- Bilingual support (PL/EN) via a simple translation context or object.
