@@ -7,14 +7,16 @@ interface ScratchCardProps {
   rows: Row[];
   onReveal: () => void;
   isRevealed: boolean;
+  onClaimPrize: (rowIndex: number) => void;
 }
 
-export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isRevealed }) => {
+export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isRevealed, onClaimPrize }) => {
   const { t } = useI18n();
   const [revealedCount, setRevealedCount] = useState(0);
-  const totalSlots = rows.length * 2;
+  const totalSlots = rows.length;
 
-  const handleSlotReveal = () => {
+  const handleSlotReveal = (rowIndex: number) => {
+    onClaimPrize(rowIndex);
     setRevealedCount(prev => {
       const next = prev + 1;
       if (next === totalSlots && !isRevealed) {
@@ -55,32 +57,29 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
                 #{i + 1}
               </div>
               
-              <div className="flex flex-1 justify-around items-center gap-2 px-1">
-                
-                {/* Number Zone */}
-                <div className="flex flex-col items-center">
-                  <span className="text-[9px] text-slate-500 font-bold mb-0.5 uppercase leading-none">Number</span>
-                  <ScratchSlot
-                    className="w-10 h-10 rounded-full border-2 border-white shadow-sm text-xl font-black text-slate-800 flex items-center justify-center"
-                    content={<span className={isWin ? "text-red-600" : ""}>{row.leftNumber}</span>}
-                    isRevealed={isRevealed}
-                    onReveal={handleSlotReveal}
-                    isWin={isWin}
-                  />
-                </div>
-
-                {/* Prize Zone */}
-                <div className="flex flex-col items-center">
-                  <span className="text-[9px] text-slate-500 font-bold mb-0.5 uppercase leading-none">Prize</span>
-                  <ScratchSlot
-                    className="w-20 h-10 rounded-md border-2 border-white shadow-sm text-base font-black text-slate-800 flex items-center justify-center"
-                    content={<span className={isWin ? "text-green-600" : ""}>{row.prize} {t.currency}</span>}
-                    isRevealed={isRevealed}
-                    onReveal={handleSlotReveal}
-                    isWin={isWin}
-                  />
-                </div>
-
+              <div className="flex-1 px-1">
+                <ScratchSlot
+                  className="w-full h-12 rounded-md border-2 border-white shadow-sm flex items-center justify-center overflow-hidden"
+                  content={
+                    <div className={`w-full h-full flex items-center justify-around px-4 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40' : 'opacity-100'}`}>
+                      <div className="flex flex-col items-center">
+                        <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Number</span>
+                        <span className={`text-xl font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
+                          {row.leftNumber}
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Prize</span>
+                        <span className={`text-base font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
+                          {row.prize} {t.currency}
+                        </span>
+                      </div>
+                    </div>
+                  }
+                  isRevealed={isRevealed || row.isRevealed}
+                  onReveal={() => handleSlotReveal(i)}
+                  isWin={isWin}
+                />
               </div>
             </div>
           );

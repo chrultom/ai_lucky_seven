@@ -7,10 +7,17 @@ import { useI18n } from './context/i18n';
 import clsx from 'clsx';
 
 function App() {
-  const { gameState, generateCard, revealCard, resetGame } = useGameLogic();
+  const { gameState, generateCard, revealCard, resetGame, claimPrize } = useGameLogic();
   const { lang, t, toggleLang } = useI18n();
   const [showWinMessage, setShowWinMessage] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [balanceAnim, setBalanceAnim] = useState(false);
+
+  useEffect(() => {
+    setBalanceAnim(true);
+    const timer = setTimeout(() => setBalanceAnim(false), 500);
+    return () => clearTimeout(timer);
+  }, [gameState.balance]);
 
   useEffect(() => {
     if (gameState.cardRevealed) {
@@ -82,7 +89,7 @@ function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full border border-slate-600">
+            <div className={`flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full border border-slate-600 transition-transform ${balanceAnim ? 'scale-110 shadow-[0_0_15px_rgba(250,204,21,0.5)]' : 'scale-100'}`}>
               <Wallet className="w-5 h-5 text-yellow-400" />
               <span className="font-bold">
                 {t.balance}: <span className="text-yellow-400">{gameState.balance} {t.currency}</span>
@@ -169,6 +176,7 @@ function App() {
                 rows={gameState.rows}
                 isRevealed={gameState.cardRevealed}
                 onReveal={revealCard}
+                onClaimPrize={claimPrize}
               />
             ) : (
               <div className="w-full max-w-md aspect-3/4 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center">
