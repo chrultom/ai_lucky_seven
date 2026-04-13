@@ -15,9 +15,24 @@ This project was built entirely using an AI agent (Roo / Gemini) in a **vibecodi
 - 💅 **Styling**: Tailored with Tailwind CSS v4 and Lucide-React icons.
 
 ## 🚀 Quick Start
+
+### Preconditions
+- **Node.js**: `^20.0.0` or higher recommended.
+- **npm**: `^10.0.0` or higher.
+
+### Installation
 ```bash
+# Clone the repository
+git clone <repository-url>
+
+# Install dependencies
 npm install
+
+# Run development server
 npm run dev
+
+# Build for production
+npm run build
 ```
 
 ## 📝 To-Do List
@@ -26,7 +41,7 @@ npm run dev
 - [x] Create Scratch Card Canvas Component
 - [x] Implement I18n Context
 - [ ] Add E2E tests (Playwright)
-- [ ] Setup CI/CD Pipeline (GitHub Actions)
+- [x] Setup CI/CD Pipeline (GitHub Actions)
 
 ---
 *Built with ❤️ via AI Vibecoding.*
