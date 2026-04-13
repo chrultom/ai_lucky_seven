@@ -151,7 +151,7 @@ export const ScratchSlot: React.FC<ScratchSlotProps> = ({
         className
       )}
     >
-      <div className={clsx("transition-opacity duration-300", effectivelyRevealed ? "opacity-100" : "opacity-0")}>
+      <div className="w-full h-full flex items-center justify-center">
         {content}
       </div>
 

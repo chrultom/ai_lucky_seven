@@ -7,26 +7,35 @@ import { useI18n } from './context/i18n';
 import clsx from 'clsx';
 
 function App() {
-  const { gameState, generateCard, revealCard, resetGame } = useGameLogic();
+  const { gameState, generateCard, revealCard, resetGame, claimPrize } = useGameLogic();
   const { lang, t, toggleLang } = useI18n();
   const [showWinMessage, setShowWinMessage] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
+  const [balanceAnim, setBalanceAnim] = useState(false);
 
   useEffect(() => {
-    if (gameState.cardRevealed) {
-      if (gameState.totalWonOnCard > 0) {
-        setShowWinMessage(true);
-        if (gameState.totalWonOnCard >= 100) {
-          triggerConfetti();
-        }
-        // Hide message after a few seconds
-        const timer = setTimeout(() => {
-          setShowWinMessage(false);
-        }, 4000);
-        return () => clearTimeout(timer);
+    setBalanceAnim(true);
+    const timer = setTimeout(() => setBalanceAnim(false), 500);
+    return () => clearTimeout(timer);
+  }, [gameState.balance]);
+
+  const revealedWinnings = gameState.rows.reduce((sum, row) => {
+    return (row.isRevealed && row.leftNumber === 7 && row.isPaid) ? sum + row.prize : sum;
+  }, 0);
+
+  useEffect(() => {
+    if (revealedWinnings > 0) {
+      setShowWinMessage(true);
+      if (revealedWinnings >= 100) {
+        triggerConfetti();
       }
+      // Hide message after a few seconds
+      const timer = setTimeout(() => {
+        setShowWinMessage(false);
+      }, 4000);
+      return () => clearTimeout(timer);
     }
-  }, [gameState.cardRevealed, gameState.totalWonOnCard]);
+  }, [revealedWinnings]);
 
   const triggerConfetti = () => {
     const duration = 3000;
@@ -82,7 +91,7 @@ function App() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full border border-slate-600">
+            <div className={`flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full border border-slate-600 transition-transform ${balanceAnim ? 'scale-110 shadow-[0_0_15px_rgba(250,204,21,0.5)]' : 'scale-100'}`}>
               <Wallet className="w-5 h-5 text-yellow-400" />
               <span className="font-bold">
                 {t.balance}: <span className="text-yellow-400">{gameState.balance} {t.currency}</span>
@@ -111,7 +120,10 @@ function App() {
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
-                onClick={generateCard}
+                onClick={() => {
+                  setShowWinMessage(false);
+                  generateCard();
+                }}
                 disabled={gameState.balance < gameState.cardCost}
                 className={clsx(
                   "group relative px-8 py-4 rounded-2xl font-black text-xl tracking-wide uppercase transition-all duration-300 flex items-center gap-3 overflow-hidden",
@@ -151,7 +163,7 @@ function App() {
           <div className="h-16 flex items-center justify-center">
             {showWinMessage && (
               <div className="animate-bounce bg-green-500 text-white px-8 py-3 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(34,197,94,0.5)] border-4 border-green-400 flex items-center gap-2">
-                🎉 {t.win} +{gameState.totalWonOnCard} {t.currency} 🎉
+                🎉 {t.win} +{revealedWinnings} {t.currency} 🎉
               </div>
             )}
             {gameState.cardRevealed && gameState.totalWonOnCard === 0 && !showWinMessage && (
@@ -169,6 +181,7 @@ function App() {
                 rows={gameState.rows}
                 isRevealed={gameState.cardRevealed}
                 onReveal={revealCard}
+                onClaimPrize={claimPrize}
               />
             ) : (
               <div className="w-full max-w-md aspect-3/4 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center">

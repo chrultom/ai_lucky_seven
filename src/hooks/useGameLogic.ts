@@ -69,6 +69,7 @@ export const useGameLogic = () => {
         leftNumber,
         prize,
         isRevealed: false,
+        isPaid: false,
       });
     }
 
@@ -88,8 +89,36 @@ export const useGameLogic = () => {
       return {
         ...prev,
         cardRevealed: true,
-        balance: prev.balance + prev.totalWonOnCard,
+        // Remove balance addition here because it will be added row by row instantly
         rows: prev.rows.map(row => ({ ...row, isRevealed: true }))
+      };
+    });
+  }, []);
+
+  const claimPrize = useCallback((rowIndex: number) => {
+    setGameState((prev) => {
+      const newRows = [...prev.rows];
+      const row = newRows[rowIndex];
+      
+      if (!row || row.isRevealed) {
+        return prev;
+      }
+
+      // Mark row as revealed
+      newRows[rowIndex] = { ...row, isRevealed: true };
+
+      if (row.leftNumber === 7 && !row.isPaid) {
+        newRows[rowIndex].isPaid = true;
+        return {
+          ...prev,
+          balance: prev.balance + row.prize,
+          rows: newRows
+        };
+      }
+
+      return {
+        ...prev,
+        rows: newRows
       };
     });
   }, []);
@@ -110,5 +139,6 @@ export const useGameLogic = () => {
     generateCard,
     revealCard,
     resetGame,
+    claimPrize,
   };
 };

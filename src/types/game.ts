@@ -3,6 +3,7 @@ export interface Row {
   leftNumber: number;
   prize: number;
   isRevealed: boolean;
+  isPaid: boolean;
 }
 
 export type PrizeType = 2 | 5 | 10 | 20 | 100 | 1000 | 77777;
