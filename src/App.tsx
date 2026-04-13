@@ -41,9 +41,16 @@ function App() {
   };
 
   useEffect(() => {
-    setBalanceAnim(true);
-    const timer = setTimeout(() => setBalanceAnim(false), 500);
-    return () => clearTimeout(timer);
+    let animationStartTimer: ReturnType<typeof setTimeout>;
+    let animationEndTimer: ReturnType<typeof setTimeout>;
+    if (gameState.balance !== undefined) {
+      animationStartTimer = setTimeout(() => setBalanceAnim(true), 0);
+      animationEndTimer = setTimeout(() => setBalanceAnim(false), 500);
+    }
+    return () => {
+      clearTimeout(animationStartTimer);
+      clearTimeout(animationEndTimer);
+    };
   }, [gameState.balance]);
 
   const revealedWinnings = gameState.rows.reduce((sum, row) => {
@@ -52,15 +59,22 @@ function App() {
 
   useEffect(() => {
     if (revealedWinnings > 0) {
-      setShowWinMessage(true);
-      if (revealedWinnings >= 100) {
-        triggerConfetti();
-      }
+      const showTimer = setTimeout(() => {
+        setShowWinMessage(true);
+        if (revealedWinnings >= 100) {
+          triggerConfetti();
+        }
+      }, 0);
+      
       // Hide message after a few seconds
-      const timer = setTimeout(() => {
+      const hideTimer = setTimeout(() => {
         setShowWinMessage(false);
       }, 4000);
-      return () => clearTimeout(timer);
+      
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
     }
   }, [revealedWinnings]);
 
