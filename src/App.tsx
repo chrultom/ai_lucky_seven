@@ -3,7 +3,7 @@ import { Wallet, Globe, Coins, PlayCircle, LogOut, RefreshCw } from 'lucide-reac
 import confetti from 'canvas-confetti';
 import { useGameLogic } from './hooks/useGameLogic';
 import { ScratchCard } from './components/ScratchCard';
-import { useI18n } from './context/i18n';
+import { useI18n } from './hooks/useI18n';
 import clsx from 'clsx';
 
 function App() {
@@ -12,30 +12,6 @@ function App() {
   const [showWinMessage, setShowWinMessage] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [balanceAnim, setBalanceAnim] = useState(false);
-
-  useEffect(() => {
-    setBalanceAnim(true);
-    const timer = setTimeout(() => setBalanceAnim(false), 500);
-    return () => clearTimeout(timer);
-  }, [gameState.balance]);
-
-  const revealedWinnings = gameState.rows.reduce((sum, row) => {
-    return (row.isRevealed && row.leftNumber === 7 && row.isPaid) ? sum + row.prize : sum;
-  }, 0);
-
-  useEffect(() => {
-    if (revealedWinnings > 0) {
-      setShowWinMessage(true);
-      if (revealedWinnings >= 100) {
-        triggerConfetti();
-      }
-      // Hide message after a few seconds
-      const timer = setTimeout(() => {
-        setShowWinMessage(false);
-      }, 4000);
-      return () => clearTimeout(timer);
-    }
-  }, [revealedWinnings]);
 
   const triggerConfetti = () => {
     const duration = 3000;
@@ -64,6 +40,45 @@ function App() {
     frame();
   };
 
+  useEffect(() => {
+    let animationStartTimer: ReturnType<typeof setTimeout>;
+    let animationEndTimer: ReturnType<typeof setTimeout>;
+    if (gameState.balance !== undefined) {
+      animationStartTimer = setTimeout(() => setBalanceAnim(true), 0);
+      animationEndTimer = setTimeout(() => setBalanceAnim(false), 500);
+    }
+    return () => {
+      clearTimeout(animationStartTimer);
+      clearTimeout(animationEndTimer);
+    };
+  }, [gameState.balance]);
+
+  const revealedWinnings = gameState.rows.reduce((sum, row) => {
+    return (row.isRevealed && row.leftNumber === 7 && row.isPaid) ? sum + row.prize : sum;
+  }, 0);
+
+  useEffect(() => {
+    if (revealedWinnings > 0) {
+      const showTimer = setTimeout(() => {
+        setShowWinMessage(true);
+        if (revealedWinnings >= 100) {
+          triggerConfetti();
+        }
+      }, 0);
+      
+      // Hide message after a few seconds
+      const hideTimer = setTimeout(() => {
+        setShowWinMessage(false);
+      }, 4000);
+      
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(hideTimer);
+      };
+    }
+  }, [revealedWinnings]);
+
+
   const handleCashOut = () => {
     setShowSummary(true);
   };
@@ -79,7 +94,7 @@ function App() {
   return (
     <div className="min-h-screen bg-slate-900 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
       {/* Header */}
-      <header className="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-10">
+      <header className="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="bg-yellow-500 p-2 rounded-lg">

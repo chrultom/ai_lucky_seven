@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Row } from '../types/game';
-import { useI18n } from '../context/i18n';
+import { useI18n } from '../hooks/useI18n';
 import { ScratchSlot } from './ScratchSlot';
 
 interface ScratchCardProps {
