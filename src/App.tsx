@@ -199,7 +199,7 @@ function App() {
                 onClaimPrize={claimPrize}
               />
             ) : (
-              <div className="w-full max-w-md aspect-3/4 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center">
+              <div className="w-full max-w-sm aspect-3/4.5 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center mx-auto">
                 <Coins className="w-16 h-16 mb-4 opacity-50" />
                 <p className="text-xl font-bold mb-2">Ready to play?</p>
                 <p>Click "{t.buyCard}" to get a new scratch card.</p>
