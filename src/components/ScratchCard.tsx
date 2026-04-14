@@ -24,7 +24,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
   }, [rows, isRevealed, onReveal]);
 
   return (
-    <div className="relative w-full max-w-sm mx-auto bg-slate-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 to-slate-950 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-yellow-500/50 select-none flex flex-col p-4 transition-transform duration-500 hover:rotate-[0.5deg] hover:scale-[1.01] group">
+    <div className="relative w-full max-w-sm mx-auto bg-zinc-900 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-800 to-black rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-yellow-500/50 select-none flex flex-col p-4 transition-transform duration-500 hover:rotate-[0.5deg] hover:scale-[1.01] group aspect-3/4.5">
       
       {/* Branding Header */}
       <div className="flex flex-col items-center mb-4">
@@ -35,14 +35,14 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
       </div>
 
       {/* Rows Container */}
-      <div className="flex-1 flex flex-col gap-2 w-full">
+      <div className="flex-1 flex flex-col justify-around w-full mt-2">
         {rows.map((row, i) => {
           const isWin = row.leftNumber === 7;
           
           return (
             <div 
               key={row.id} 
-              className="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 border border-slate-700 shadow-inner"
+              className="flex items-center justify-between p-1.5 rounded-lg bg-slate-800/80 border border-slate-700 shadow-inner"
             >
               <div className="w-6 text-center text-slate-500 font-black text-xs">
                 #{i + 1}
@@ -50,18 +50,18 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
               
               <div className="flex-1 px-1">
                 <ScratchSlot
-                  className="w-full h-14 rounded-md border border-slate-900 shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] flex items-center justify-center overflow-hidden bg-[#fdfbf7]"
+                  className="w-full h-12 rounded-md border border-slate-900 shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] flex items-center justify-center overflow-hidden bg-[#fdfbf7]"
                   content={
                     <div className={`w-full h-full flex items-center justify-between px-6 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40 grayscale' : 'opacity-100'}`}>
                       <div className="flex flex-col items-start w-1/3">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Number</span>
-                        <span className={`text-2xl font-black ${isWin ? "text-red-600 animate-pulse drop-shadow-[0_0_4px_rgba(220,38,38,0.5)]" : "text-slate-800"}`}>
+                        <span className={`text-2xl font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
                           {row.leftNumber}
                         </span>
                       </div>
                       <div className="flex flex-col items-end w-1/3 text-right">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Prize</span>
-                        <span className={`text-lg font-black ${isWin ? "text-red-600 animate-pulse drop-shadow-[0_0_4px_rgba(220,38,38,0.5)]" : "text-slate-800"}`}>
+                        <span className={`text-lg font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
                           {row.prize} {t.currency}
                         </span>
                       </div>

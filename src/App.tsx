@@ -92,7 +92,7 @@ function App() {
   const isWinner = gameState.balance > 10;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
+    <div className="min-h-screen bg-slate-900 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
       {/* Header */}
       <header className="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -199,7 +199,7 @@ function App() {
                 onClaimPrize={claimPrize}
               />
             ) : (
-              <div className="w-full max-w-md aspect-3/4 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center">
+              <div className="w-full max-w-sm aspect-3/4.5 bg-slate-800/50 rounded-xl border-4 border-dashed border-slate-700 flex flex-col items-center justify-center text-slate-500 p-8 text-center mx-auto">
                 <Coins className="w-16 h-16 mb-4 opacity-50" />
                 <p className="text-xl font-bold mb-2">Ready to play?</p>
                 <p>Click "{t.buyCard}" to get a new scratch card.</p>
