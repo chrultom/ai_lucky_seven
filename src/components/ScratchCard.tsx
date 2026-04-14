@@ -24,14 +24,14 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
   }, [rows, isRevealed, onReveal]);
 
   return (
-    <div className="relative w-full max-w-sm mx-auto bg-slate-50 rounded-xl shadow-2xl overflow-hidden border-[6px] border-yellow-500 select-none flex flex-col p-3">
+    <div className="relative w-full max-w-sm mx-auto bg-slate-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 to-slate-950 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-yellow-500/50 select-none flex flex-col p-4 transition-transform duration-500 hover:rotate-[0.5deg] hover:scale-[1.01] group">
       
       {/* Branding Header */}
-      <div className="flex flex-col items-center mb-3">
-        <h2 className="text-3xl font-black text-red-600 tracking-widest uppercase drop-shadow-sm">
+      <div className="flex flex-col items-center mb-4">
+        <h2 className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-br from-yellow-300 to-orange-500 tracking-widest uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] filter">
           LUCKY 7
         </h2>
-        <div className="w-3/4 h-1 bg-linear-to-r from-transparent via-yellow-400 to-transparent mt-1"></div>
+        <div className="w-4/5 h-1 bg-linear-to-r from-transparent via-yellow-500/50 to-transparent mt-2"></div>
       </div>
 
       {/* Rows Container */}
@@ -42,26 +42,26 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
           return (
             <div 
               key={row.id} 
-              className="flex items-center justify-between p-1.5 rounded-lg bg-slate-200 border-2 border-slate-300 shadow-inner"
+              className="flex items-center justify-between p-2 rounded-lg bg-slate-800/80 border border-slate-700 shadow-inner"
             >
-              <div className="w-6 text-center text-slate-400 font-black text-xs">
+              <div className="w-6 text-center text-slate-500 font-black text-xs">
                 #{i + 1}
               </div>
               
               <div className="flex-1 px-1">
                 <ScratchSlot
-                  className="w-full h-12 rounded-md border-2 border-white shadow-sm flex items-center justify-center overflow-hidden"
+                  className="w-full h-14 rounded-md border border-slate-900 shadow-[inset_0_2px_8px_rgba(0,0,0,0.2)] flex items-center justify-center overflow-hidden bg-[#fdfbf7]"
                   content={
-                    <div className={`w-full h-full flex items-center justify-between px-6 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40' : 'opacity-100'}`}>
+                    <div className={`w-full h-full flex items-center justify-between px-6 transition-all duration-500 ${row.isRevealed && !isWin ? 'opacity-40 grayscale' : 'opacity-100'}`}>
                       <div className="flex flex-col items-start w-1/3">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Number</span>
-                        <span className={`text-xl font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
+                        <span className={`text-2xl font-black ${isWin ? "text-red-600 animate-pulse drop-shadow-[0_0_4px_rgba(220,38,38,0.5)]" : "text-slate-800"}`}>
                           {row.leftNumber}
                         </span>
                       </div>
                       <div className="flex flex-col items-end w-1/3 text-right">
                         <span className="text-[9px] text-slate-500 font-bold uppercase leading-none">Prize</span>
-                        <span className={`text-base font-black ${isWin ? "text-yellow-600 animate-pulse drop-shadow-[0_0_8px_rgba(202,138,4,0.8)]" : "text-slate-800"}`}>
+                        <span className={`text-lg font-black ${isWin ? "text-red-600 animate-pulse drop-shadow-[0_0_4px_rgba(220,38,38,0.5)]" : "text-slate-800"}`}>
                           {row.prize} {t.currency}
                         </span>
                       </div>

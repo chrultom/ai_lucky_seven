@@ -146,8 +146,8 @@ export const ScratchSlot: React.FC<ScratchSlotProps> = ({
     <div 
       ref={containerRef}
       className={clsx(
-        "relative flex items-center justify-center overflow-hidden bg-white select-none",
-        effectivelyRevealed && isWin ? "bg-green-100" : "",
+        "relative flex items-center justify-center overflow-hidden select-none",
+        effectivelyRevealed && isWin ? "bg-green-100" : "bg-white",
         className
       )}
     >

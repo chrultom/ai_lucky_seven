@@ -92,7 +92,7 @@ function App() {
   const isWinner = gameState.balance > 10;
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
+    <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
       {/* Header */}
       <header className="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
