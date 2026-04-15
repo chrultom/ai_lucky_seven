@@ -135,6 +135,7 @@ function App() {
           <div className="flex flex-col items-center gap-4">
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
+                data-testid="buy-button"
                 onClick={() => {
                   setShowWinMessage(false);
                   generateCard();
@@ -177,7 +178,7 @@ function App() {
           {/* Win/Loss Message */}
           <div className="h-16 flex items-center justify-center">
             {showWinMessage && (
-              <div className="animate-bounce bg-green-500 text-white px-8 py-3 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(34,197,94,0.5)] border-4 border-green-400 flex items-center gap-2">
+              <div data-testid="win-message" className="animate-bounce bg-green-500 text-white px-8 py-3 rounded-full font-black text-2xl shadow-[0_0_30px_rgba(34,197,94,0.5)] border-4 border-green-400 flex items-center gap-2">
                 🎉 {t.win} +{revealedWinnings} {t.currency} 🎉
               </div>
             )}
@@ -246,6 +247,7 @@ function App() {
             </div>
 
             <button
+              data-testid="reset-button"
               onClick={handlePlayAgain}
               className="w-full group relative px-6 py-4 rounded-xl font-black text-lg tracking-wide uppercase transition-all duration-300 flex justify-center items-center gap-3 overflow-hidden bg-linear-to-r from-blue-500 to-indigo-600 text-white hover:scale-105 active:scale-95 shadow-lg"
             >

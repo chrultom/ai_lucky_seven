@@ -35,12 +35,26 @@ npm run dev
 npm run build
 ```
 
+## 🧪 Testing (E2E)
+This project uses **Playwright** for end-to-end testing, covering the core scratch mechanic and winning logic.
+
+```bash
+# Install Playwright browsers (first time only)
+npx playwright install --with-deps
+
+# Run tests
+npx playwright test
+
+# Show test report (HTML)
+npx playwright show-report
+```
+
 ## 📝 To-Do List
 - [x] Setup Vite + React + TypeScript + Tailwind CSS v4
 - [x] Implement Game Logic & Probabilities
 - [x] Create Scratch Card Canvas Component
 - [x] Implement I18n Context
-- [ ] Add E2E tests (Playwright)
+- [x] Add E2E tests (Playwright)
 - [x] Setup CI/CD Pipeline (GitHub Actions)
 
 ---
