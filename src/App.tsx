@@ -126,7 +126,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 pb-32 sm:py-12 flex flex-col items-center">
+      <main className="max-w-4xl mx-auto px-4 py-8 pb-16 sm:py-12 flex flex-col items-center">
         
         {/* Game Area */}
         <div className="w-full flex flex-col items-center gap-8">
@@ -149,7 +149,7 @@ function App() {
                 )}
                 style={
                   gameState.balance >= gameState.cardCost
-                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a' }
+                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a', colorScheme: 'light'}
                     : {}
                 }
               >
