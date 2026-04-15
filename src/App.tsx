@@ -149,7 +149,7 @@ function App() {
                 )}
                 style={
                   gameState.balance >= gameState.cardCost
-                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a', colorScheme: 'light'}
+                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a', forcedColorAdjust: 'none', colorScheme: 'light'}
                     : {}
                 }
               >
