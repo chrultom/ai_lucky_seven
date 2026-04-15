@@ -1,14 +1,20 @@
 import { test, expect } from '@playwright/test';
 
+// Extend Window interface to avoid 'any' types in tests
+interface CustomWindow extends Window {
+  forceWin?: boolean;
+  confettiTriggered?: boolean;
+}
+
 test.describe('Lucky 7 Scratch Card E2E', () => {
 
   test.beforeEach(async ({ page }) => {
     // Inject a script to allow mocking Math.random for deterministic testing
     await page.addInitScript(() => {
       const originalRandom = Math.random;
-      (window as any).forceWin = false;
+      (window as CustomWindow).forceWin = false;
       Math.random = function() {
-        if ((window as any).forceWin) {
+        if ((window as CustomWindow).forceWin) {
           return 0.05; // 0.05 < 0.1 will guarantee a win in useGameLogic
         }
         return originalRandom.call(this);
@@ -75,7 +81,7 @@ test.describe('Lucky 7 Scratch Card E2E', () => {
   test('Win Flow: Force a winning state and verify win-message and confetti', async ({ page }) => {
     // Force win
     await page.evaluate(() => {
-      (window as any).forceWin = true;
+      (window as CustomWindow).forceWin = true;
     });
 
     // Buy a card
@@ -84,10 +90,7 @@ test.describe('Lucky 7 Scratch Card E2E', () => {
 
     // Mock confetti to verify it's called
     await page.evaluate(() => {
-      (window as any).confettiTriggered = false;
-      // Intercept the canvas-confetti by just checking if it exists and patching it
-      // But we can just wait for the win-message which implies win flow
-      // A better way is to listen for win-message since that's what user requested
+      (window as CustomWindow).confettiTriggered = false;
     });
 
     // Reveal the first row to trigger win
