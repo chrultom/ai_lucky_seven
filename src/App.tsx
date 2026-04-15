@@ -92,7 +92,7 @@ function App() {
   const isWinner = gameState.balance > 10;
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
+    <div className="min-h-100dvh bg-slate-900 text-white font-sans selection:bg-yellow-500 selection:text-black relative">
       {/* Header */}
       <header className="bg-slate-800/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -126,7 +126,7 @@ function App() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 py-8 sm:py-12 flex flex-col items-center">
+      <main className="max-w-4xl mx-auto px-4 py-8 pb-16 sm:py-12 flex flex-col items-center">
         
         {/* Game Area */}
         <div className="w-full flex flex-col items-center gap-8">
@@ -142,11 +142,16 @@ function App() {
                 }}
                 disabled={gameState.balance < gameState.cardCost}
                 className={clsx(
-                  "group relative px-8 py-4 rounded-2xl font-black text-xl tracking-wide uppercase transition-all duration-300 flex items-center gap-3 overflow-hidden",
+                  "appearance-none group relative px-8 py-4 rounded-2xl font-black text-xl tracking-wide uppercase transition-all duration-300 flex items-center gap-3 overflow-hidden",
                   gameState.balance >= gameState.cardCost
-                    ? "bg-linear-to-b from-yellow-300 to-yellow-600 text-slate-900 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] active:scale-95"
+                    ? "hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] active:scale-95"
                     : "bg-slate-700 text-slate-500 cursor-not-allowed"
                 )}
+                style={
+                  gameState.balance >= gameState.cardCost
+                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a', forcedColorAdjust: 'none', colorScheme: 'light'}
+                    : {}
+                }
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <PlayCircle className="w-6 h-6" />

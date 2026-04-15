@@ -56,6 +56,7 @@ npx playwright show-report
 - [x] Implement I18n Context
 - [x] Add E2E tests (Playwright)
 - [x] Setup CI/CD Pipeline (GitHub Actions)
+- [x] Deploy to Vercel
 
 ---
 *Built with ❤️ via AI Vibecoding.*
