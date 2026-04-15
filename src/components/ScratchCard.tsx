@@ -24,10 +24,10 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
   }, [rows, isRevealed, onReveal]);
 
   return (
-    <div data-testid="scratch-card" className="relative w-full max-w-sm mx-auto bg-zinc-900 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-800 to-black rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-yellow-500/50 select-none flex flex-col p-4 transition-transform duration-500 hover:rotate-[0.5deg] hover:scale-[1.01] group aspect-3/4.5">
+    <div data-testid="scratch-card" className="relative w-full max-w-sm mx-auto bg-zinc-900 bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))] from-zinc-800 to-black rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border-4 border-yellow-500/50 select-none flex flex-col p-4 transition-transform duration-500 hover:rotate-[0.5deg] hover:scale-[1.01] group min-h-[500px]">
       
       {/* Branding Header */}
-      <div className="flex flex-col items-center mb-4">
+      <div className="flex flex-col items-center mb-4 shrink-0">
         <h2 className="text-4xl font-black text-transparent bg-clip-text bg-linear-to-br from-yellow-300 to-orange-500 tracking-widest uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] filter">
           LUCKY 7
         </h2>
@@ -35,7 +35,7 @@ export const ScratchCard: React.FC<ScratchCardProps> = ({ rows, onReveal, isReve
       </div>
 
       {/* Rows Container */}
-      <div className="flex-1 flex flex-col justify-around w-full mt-2">
+      <div className="flex-1 flex flex-col gap-2 w-full mt-2 justify-center">
         {rows.map((row, i) => {
           const isWin = row.leftNumber === 7;
           

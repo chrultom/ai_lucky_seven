@@ -144,9 +144,14 @@ function App() {
                 className={clsx(
                   "appearance-none group relative px-8 py-4 rounded-2xl font-black text-xl tracking-wide uppercase transition-all duration-300 flex items-center gap-3 overflow-hidden",
                   gameState.balance >= gameState.cardCost
-                    ? "bg-linear-to-b from-yellow-300 to-yellow-600 text-slate-900 dark:text-slate-900 hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] active:scale-95"
+                    ? "hover:scale-105 hover:shadow-[0_0_30px_rgba(234,179,8,0.5)] active:scale-95"
                     : "bg-slate-700 text-slate-500 cursor-not-allowed"
                 )}
+                style={
+                  gameState.balance >= gameState.cardCost
+                    ? { background: 'linear-gradient(to bottom, #fde047, #ca8a04)', color: '#0f172a' }
+                    : {}
+                }
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <PlayCircle className="w-6 h-6" />
