@@ -7,6 +7,7 @@ interface ScratchSlotProps {
   onReveal: () => void;
   className?: string;
   isWin?: boolean;
+  testId?: string;
 }
 
 export const ScratchSlot: React.FC<ScratchSlotProps> = ({ 
@@ -14,7 +15,8 @@ export const ScratchSlot: React.FC<ScratchSlotProps> = ({
   isRevealed, 
   onReveal, 
   className,
-  isWin 
+  isWin,
+  testId
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -144,6 +146,7 @@ export const ScratchSlot: React.FC<ScratchSlotProps> = ({
 
   return (
     <div 
+      data-testid={testId}
       ref={containerRef}
       className={clsx(
         "relative flex items-center justify-center overflow-hidden select-none",
